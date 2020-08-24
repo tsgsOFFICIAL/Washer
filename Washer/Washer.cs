@@ -9,11 +9,14 @@ namespace Washer
         #region Fields
         private bool powerState; //powerState refers to wether the washer has power or not
         private bool runState; //runState refers to the state of the washer, is it running or not
-        private bool isWaterConnected; //Is the water properly connected
-        private bool isDoorOpen; //Is the door open
-        private short weight; //Weight in kg's
+        private bool doorState; //Is the door open, true == open, false == closed
+        private bool isClothesWet; //False == dry, true == wet
+        private bool didWasherRun; //Self-explanatory
+        private short weightOfWash; //Weight in kg's
         private short temperature; //temp refers to the temperature of the water inside the washer
         private string runningProgram; //Holds the running program
+        private string colorOfWash; //Holds the color of the wash
+
         /// <summary>
         /// A list of available programs for your washer
         /// </summary>
@@ -39,15 +42,20 @@ namespace Washer
             }
         public string DoorState
             {
-            get { if (this.isDoorOpen) { return "open"; } else { return "closed"; } }
+            get { if (this.doorState) { return "open"; } else { return "closed"; } }
             }
         public string Temperature
             {
             get { return temperature.ToString(); }
             }
+
         public string Weight
             {
-            get { return weight.ToString(); }
+            get { return weightOfWash.ToString(); }
+            }
+        public string ClothesState
+            {
+            get { if (isClothesWet) { return "wet"; } else { return "dry"; } }
             }
         #endregion
 
@@ -108,6 +116,7 @@ namespace Washer
                     }
                 runningProgram = program.ToLower().Trim();
 
+                didWasherRun = true;
                 runState = true;
                 return true;
                 }
@@ -124,6 +133,46 @@ namespace Washer
             {
             runState = false;
             runningProgram = "";
+            }
+
+        /// <summary>
+        /// Open and close the door
+        /// </summary>
+        public void ToggleDoor()
+            {
+            if (doorState)
+                {
+                doorState = false; //Close the door
+                }
+            else
+                {
+                doorState = true; //Open the door
+                }
+            }
+
+        /// <summary>
+        /// Load clothes into the machine
+        /// </summary>
+        /// <param name="color">What color is the clothes that you want to load into the machine</param>
+        /// <param name="weight">How much does your clothes weigh in grams</param>
+        public void LoadClothes(string color, int weight)
+            {
+            colorOfWash = color;
+            weightOfWash = (short)weight;
+            }
+
+        public void UnloadClothes()
+            {
+            colorOfWash = "";
+            weightOfWash = 0;
+            if (didWasherRun)
+                {
+                isClothesWet = true;
+                }
+            else
+                {
+                isClothesWet = false;
+                }
             }
         #endregion
         }

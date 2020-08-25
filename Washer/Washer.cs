@@ -30,7 +30,17 @@ namespace Washer
         #region Properties
         public string PowerState
             {
-            get { if (this.powerState) { return "on"; } else { return "off"; } }
+            get
+                {
+                if (this.powerState)
+                    {
+                    return "on";
+                    }
+                else
+                    {
+                    return "off";
+                    }
+                }
             }
         public string CentrifugeState
             {

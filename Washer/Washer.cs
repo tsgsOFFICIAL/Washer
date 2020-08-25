@@ -31,16 +31,7 @@ namespace Washer
         public string PowerState
             {
             get
-                {
-                if (this.powerState)
-                    {
-                    return "on";
-                    }
-                else
-                    {
-                    return "off";
-                    }
-                }
+                { if (this.powerState) { return "on"; } else { return "off"; } }
             }
         public string CentrifugeState
             {

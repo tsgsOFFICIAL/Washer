@@ -61,7 +61,7 @@ namespace Washer
 
         public string Weight
             {
-            get { return weightOfWash.ToString(); }
+            get { return Convert.ToString(weightOfWash/1000); }
             }
         public string ClothesState
             {
